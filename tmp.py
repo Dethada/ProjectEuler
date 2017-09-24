@@ -1,21 +1,7 @@
 #!/usr/bin/python
-import time
+import time, string
 
-start = time.time()
-print "[*] Finding first 2 million primes..."
-def sieve(limit):
-	sieve = [True] * limit
-	def mark(sieve, x):
-		for i in xrange(x+x, len(sieve), x):
-			sieve[i] = False
-
-	for x in xrange(2, int(len(sieve) ** 0.5) + 1):
-		if sieve[x]:
-			mark(sieve, x)
-
-	return sum(i for i in xrange(2, len(sieve)) if sieve[i]) 
-
-print "Sum: " + str(sieve(2000000))
-print "Done in: " + str(time.time() - start)
-
+x = "52 70 95 23 04 60 11 42 69 24 68 56 01 32 56 71 37 02 36 91"
+y = string.replace(x, " ", ", ")
+print "[" + y + "],"
 

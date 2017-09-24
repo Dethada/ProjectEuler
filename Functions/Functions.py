@@ -37,3 +37,29 @@ def sieve(limit):
 
 	return sum(i for i in xrange(2, len(sieve)) if sieve[i])
 
+# generate triangle numbers up to a limit
+def triangleNumbers(limit):
+    numbers = []
+    for i in range(1, limit + 1):
+        numbers.append((i * (i + 1)) / 2)
+    return numbers
+
+# returns number of factors of x
+def factorize(x):
+    factors = []
+    count = 0
+    for i in xrange(2, long(math.sqrt(x))):
+        if (x % i == 0):
+            count += 2
+    return count
+
+# returns all factors of x
+def factorize(x):
+    factors = []
+    count = 0
+    for i in xrange(2, long(math.sqrt(x))):
+        if (x % i == 0):
+            count += 2
+            factors.append(i)
+            factors.append(x / i)
+    return factors
