@@ -1,3 +1,5 @@
+import math
+
 # Carmichael numbers
 carmichael = [561, 1105, 1729, 2465, 2821, 6601, 8911, 10585, 15841, 29341, 41041, 46657, 52633, 62745, 63973, 75361, 101101, 115921, 126217, 162401, 172081, 188461, 252601, 278545, 294409, 314821, 334153]
 
@@ -43,7 +45,7 @@ def triangleNumbers(limit):
     return numbers
 
 # returns number of factors of x
-def factorize(x):
+def noOfFactors(x):
     factors = []
     count = 0
     for i in xrange(2, long(math.sqrt(x))):
