@@ -31,7 +31,7 @@ def sieve2(limit):
 		for i in xrange(x+x, len(sieve), x):
 			sieve[i] = False
 
-	for x in xrange(2, int(len(sieve) ** 0.5) + 1):
+	for x in xrange(2, int(math.sqrt(len(sieve))) + 1):
 		if sieve[x]:
 			mark(sieve, x)
 
@@ -41,7 +41,7 @@ def sieve2(limit):
 def triangleNumbers(limit):
     numbers = []
     for i in range(1, limit + 1):
-        numbers.append((i * (i + 1)) / 2)
+        numbers.append((i * (i + 1)) >> 1)
     return numbers
 
 # returns number of factors of x
@@ -53,7 +53,7 @@ def noOfFactors(x):
             count += 2
     return count
 
-# returns all factors of x
+# returns all factors of x except for 1 and x itself
 def factorize(x):
     factors = []
     count = 0
@@ -63,3 +63,8 @@ def factorize(x):
             factors.append(i)
             factors.append(x / i)
     return factors
+
+# returns all factors of n
+def factors(n):    
+    return set(reduce(list.__add__, 
+    ([i, n//i] for i in range(1, int(math.sqrt(n)) + 1) if n % i == 0)))

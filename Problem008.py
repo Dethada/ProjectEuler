@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-fileName = "Problem8.txt"
+fileName = "Problem008.txt"
 f = open(fileName, 'r')
 f_contents = f.readlines()
 allDigits = ""

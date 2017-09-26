@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import time
+import time, math
 
 start = time.time()
 print "[*] Finding primes below 2 million..."
@@ -9,7 +9,7 @@ def sieve(limit):
 		for i in xrange(x+x, len(sieve), x):
 			sieve[i] = False
 
-	for x in xrange(2, int(len(sieve) ** 0.5) + 1):
+	for x in xrange(2, int(math.sqrt(len(sieve))) + 1):
 		if sieve[x]:
 			mark(sieve, x)
 

@@ -1,20 +1,12 @@
 #!/usr/bin/python
-import math
+from Functions.Functions import factors
+import time, itertools
 
-# returns number of factors of x
-def factorize(x):
-    factors = []
-    count = 0
-    for i in xrange(2, long(math.sqrt(x))):
-        if (x % i == 0):
-            count += 2
-    return count
-
-i = 1
-while True:
-    tNum = ((i * (i + 1)) / 2)
-    if factorize(tNum) > 500:
-        print "Found: " + str(tNum)
+start = time.clock()
+for i in itertools.count(1):
+    tNum = ((i * (i + 1)) >> 1)
+    if len(factors(tNum)) > 500:
+        print "Found: {}".format(tNum)
         break
-    else:
-        i += 1
+
+print time.clock() - start
