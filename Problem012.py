@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from Functions.Functions import factors
+from Functions.Functions.Functions import factors
 import time, itertools
 
 start = time.clock()

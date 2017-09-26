@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from Functions import Functions
+from Functions.Functions import Functions
 import math, time
 
 def isAbundant(n):
