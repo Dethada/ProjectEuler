@@ -1,6 +1,6 @@
 #!/usr/bin/python
 import time
-from Functions.Functions import Functions
+from sympy import isprime
 
 num = 2
 ans = 0
@@ -9,7 +9,7 @@ y = n -1
 start = time.time()
 for i in range(n):
 	while True:
-		if (Functions.isPrime(num)):
+		if (isprime(num)):
 			if (i == y):
 				ans = num
 			num += 1
