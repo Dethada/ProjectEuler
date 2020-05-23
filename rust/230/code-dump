@@ -1,0 +1,150 @@
+    // let pattern = fibonacci_str(tmp_info.target_term);
+    // println!("pattern: {}", pattern);
+
+    // let x = get_me_the_ans(a_len, b_len, &pattern, tmp_info.n).unwrap();
+    // println!("delta: {}", x.delta);
+    // let ans = match x.current_char {
+    //     'A' => {
+    //         a.as_bytes()[(x.delta-1) as usize]
+    //     },
+    //     _ => {
+    //         b.as_bytes()[(x.delta-1) as usize]
+    //     }
+    // } as char;
+
+        // println!("Target term: {}, sum: {}, real len: {}", target_term, sum, real_len);
+    // println!("Found the target term: {}, real_len: {}", tmp_target_term, tmp_real_len);
+
+    // let diff = sum - prev_prev;
+
+    // println!("tmp_target_term: {}, tmp_info.n: {}, real len: {}", tmp_target_term, tmp_info.n, tmp_real_len);
+
+fn fibonacci_str(target_term: u64) -> String {
+    if target_term <= 0 {
+        return "".to_string();
+    } else if target_term == 1 {
+        return "A".to_string();
+    } else if target_term == 2 {
+        return "B".to_string();
+    }
+
+	let mut sum = String::new();
+	let mut prev_prev = "A".to_string();
+    let mut prev = "B".to_string();
+	for _i in 2..target_term {
+        sum = format!("{}{}", prev_prev, prev);
+		prev_prev = prev.clone();
+        prev = sum.clone();
+    }
+    sum
+}
+
+#[derive(Debug)]
+struct Magic {
+    delta: u64,
+    current_char: char,
+}
+
+fn get_me_the_ans(a_len: u64, b_len: u64, pattern: &str, n: u64) -> Option<Magic> {
+    let mut curr_len: u64 = 0;
+    for (i, c) in pattern.chars().enumerate() {
+        if c == 'A' {
+            curr_len += a_len;
+        } else {
+            curr_len += b_len;
+        }
+        if curr_len >= n {
+            println!("I: {}, Current Len: {}, n: {}", i, curr_len, n);
+            return Some(Magic {
+                delta: curr_len - n,
+                current_char: c,
+            });
+        }
+    }
+    None
+}
+
+fn find_term_by_pattern_len(a_len: u64, b_len: u64, target_len: u64, n: u64) -> Foo {
+    let mut target_term = 1;
+    let mut prev_real_len: u64 = a_len;
+    let mut real_len: u64 = a_len;
+    let mut sum = 1;
+    let mut prev_prev = 0;
+    let mut prev;
+    loop {
+        if target_term == 1 {
+            // real_len = a_len;
+            sum = 1;
+            println!("Target pattern len: {} Real len: {}, prev_prev: {}, prev: {}, sum: {}", target_len, real_len, 1, 0, sum);
+            if sum >= target_len {
+                return Foo {
+                    n: if prev_real_len > n {
+                        n
+                    } else {
+                        n - prev_real_len
+                    },
+                    target_term: if prev_real_len > n {
+                        target_term - 1
+                    } else {
+                        target_term
+                    },
+                    target_pattern_len: 1,
+                    stop: if prev_real_len > n {
+                        true
+                    } else {
+                        false
+                    },
+                };
+            }
+            target_term += 1;
+            continue;
+        }
+        prev = sum;
+        prev_real_len = real_len;
+        real_len = 0;
+        real_len += prev_prev * a_len;
+        real_len += prev * b_len;
+        sum = prev_prev + prev;
+        println!("Target pattern len: {} Real len: {}, Prev Real len: {}, prev_prev: {}, prev: {}, sum: {}", target_len, real_len, prev_real_len, prev_prev, prev, sum);
+        prev_prev = prev;
+        if sum >= target_len {
+            return Foo {
+                n: if prev_real_len > n {
+                    n
+                } else {
+                    n - prev_real_len
+                },
+                target_term: if prev_real_len > n {
+                    target_term - 1
+                } else {
+                    target_term
+                },
+                target_pattern_len: sum - prev,
+                stop: if prev_real_len >= n {
+                    true
+                } else {
+                    false
+                },
+            };
+        }
+        target_term += 1;
+    }
+}
+
+fn find_term_by_term(a_len: u64, b_len: u64, target_term: u64) -> u64 {
+    // let mut current_term = 1;
+    let mut real_len: u64 = a_len;
+    let mut sum = 1;
+    let mut prev_prev = 0;
+    let mut prev;
+    for term in 2..target_term {
+        prev = sum;
+        real_len = 0;
+        real_len += prev_prev * a_len;
+        real_len += prev * b_len;
+        sum = prev_prev + prev;
+        // println!("Target len: {} Real len: {}, Prev Real len: {}, prev_prev: {}, prev: {}, sum: {}", target_len, real_len, prev_real_len, prev_prev, prev, sum);
+        prev_prev = prev;
+    }
+    real_len
+}
