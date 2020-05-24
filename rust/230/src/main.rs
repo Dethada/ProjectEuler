@@ -1,18 +1,18 @@
 use std::io::{self, BufRead};
 
 struct Foo {
-    n: u64,
-    target_term: u64,
+    n: u128,
+    target_term: u128,
 }
 
-fn find_term_by_real_len(a_len: u64, b_len: u64, target_len: u64, target_term: u64) -> Foo {
+fn find_term_by_real_len(a_len: u128, b_len: u128, target_len: u128, target_term: u128) -> Foo {
     let mut curr_term = 1;
     let mut patt_len = 1;
     let mut prev2_patt_len;
     let mut prev1_patt_len = 1;
-    let mut left_block_len: u64;
-    let mut right_block_len: u64 = a_len;
-    let mut full_block_len: u64 = b_len;
+    let mut left_block_len: u128;
+    let mut right_block_len: u128 = a_len;
+    let mut full_block_len: u128 = b_len;
     loop {
         if curr_term == 1 {
             if target_term == 0 || curr_term == target_term {
@@ -81,17 +81,17 @@ fn find_term_by_real_len(a_len: u64, b_len: u64, target_len: u64, target_term: u
     }
 }
 
-pub fn solve(a: &str, b: &str, n: u64) -> u64 {
-    let a_len = a.len() as u64;
-    let b_len = b.len() as u64;
+pub fn solve(a: &str, b: &str, n: u128) -> u128 {
+    let a_len = a.len() as u128;
+    let b_len = b.len() as u128;
     if n <= a_len {
         let ans = a.chars().nth((n-1) as usize).unwrap();
         println!("{}", ans);
-        return ans.to_digit(10).unwrap() as u64;
+        return ans.to_digit(10).unwrap() as u128;
     } else if n <= b_len {
         let ans = b.chars().nth((n-1) as usize).unwrap();
         println!("{}", ans);
-        return ans.to_digit(10).unwrap() as u64;
+        return ans.to_digit(10).unwrap() as u128;
     }
 
     let mut tmp_info = Foo {
@@ -118,34 +118,34 @@ pub fn solve(a: &str, b: &str, n: u64) -> u64 {
     };
 
     println!("{}", ans);
-    ans.to_digit(10).unwrap() as u64
+    ans.to_digit(10).unwrap() as u128
 }
 
 fn parse_line(line: String) {
     let mut triplets = line.split_whitespace();
     let a = triplets.next().unwrap();
     let b = triplets.next().unwrap();
-    let n = triplets.next().unwrap().parse::<u64>().unwrap();
+    let n = triplets.next().unwrap().parse::<u128>().unwrap();
     solve(a, b, n);
     // assert_eq!(solve(a, b, n), 1u64);
 }
 
 fn main() {
-    // let stdin = io::stdin();
-    // let mut iterator = stdin.lock().lines();
-    // let line1 = iterator.next().unwrap().unwrap();
-    // let num_entries = line1.parse::<u64>().unwrap();
-    // for _i in 0..num_entries {
-    //     let line = iterator.next().unwrap().unwrap();
-    //     parse_line(line);
-    // }
-    let a = "1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679";
-    let b = "8214808651328230664709384460955058223172535940812848111745028410270193852110555964462294895493038196";
-    let mut total: u64 = 0;
-    for n in 0..18 {
-        let ans = 10u64.pow(n) * solve(a, b, (127 + (19 * n as u64)) * 7u64.pow(n));
-        total += ans;
-        println!("Ans: {}", ans);
+    let stdin = io::stdin();
+    let mut iterator = stdin.lock().lines();
+    let line1 = iterator.next().unwrap().unwrap();
+    let num_entries = line1.parse::<u128>().unwrap();
+    for _i in 0..num_entries {
+        let line = iterator.next().unwrap().unwrap();
+        parse_line(line);
     }
-    println!("Total: {}", total);
+    // let a = "1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679";
+    // let b = "8214808651328230664709384460955058223172535940812848111745028410270193852110555964462294895493038196";
+    // let mut total: u128 = 0;
+    // for n in 0..18 {
+    //     let ans = 10u128.pow(n) * solve(a, b, (127 + (19 * n as u128)) * 7u128.pow(n));
+    //     total += ans;
+    //     println!("Ans: {}", ans);
+    // }
+    // println!("Total: {}", total);
 }
